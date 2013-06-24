@@ -17,10 +17,12 @@ else
 instance.on 'input', ->
   if currentGame is null then throw Error('No current game')
   if instance.isValid()
-    alert 'Puzzle solved!'
-    persistence.removeGame currentGame
-    currentGame = null
-    showList()
+    setTimeout ->
+      alert 'Puzzle solved!'
+      persistence.removeGame currentGame
+      currentGame = null
+      showList()
+    , 1
   else
     persistence.updateGame currentGame, instance.data
 
