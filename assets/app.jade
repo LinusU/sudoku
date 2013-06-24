@@ -1,0 +1,15 @@
+!!! 5
+html
+  head
+    title Sudoku
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', type='text/css', href='/app.css')
+    link(rel='apple-touch-icon', sizes='144x144', href='/touch-icon-144.png')
+  body
+    #list
+      .new(onclick='newGame()') New game
+      #games
+    #main(style='display: none;')
+      .back(onclick='pauseGame()') Back
+      #game
+    script(type='text/javascript', src='/app.js')

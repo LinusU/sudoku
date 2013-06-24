@@ -1,0 +1,10 @@
+{
+  "name": "app-sudoku",
+  "version": "0.1.0",
+  "dependencies": {
+    "coffee-script": "~1.6.3",
+    "express": "~3.2.6",
+    "assman": "~0.1.2",
+    "sudoku": "0.0.2"
+  }
+}
