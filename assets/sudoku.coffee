@@ -6,6 +6,11 @@ class Sudoku
     @data = null
     @cells = []
     @_on = {}
+  _fill: (x, y, cell, n) ->
+    @data.input[y][x] = n
+    cell.value = n
+    cell.element.innerText = (if n is null then '' else n)
+    @emit 'input', { x: x, y: y, n: n }
   on: (ev, fn) ->
     (@_on[ev] ||= []).push fn
   emit: (ev, data) ->
@@ -61,16 +66,24 @@ class Sudoku
       @select (4 + dx), (4 + dy)
   fill: (n) ->
     if @selected and @selected.cell.type is 'user'
-      @data.input[@selected.y][@selected.x] = n
-      @selected.cell.value = n
-      @selected.cell.element.innerText = n
-      @emit 'input', { x: @selected.x, y: @selected.y, n: n }
+      @_fill @selected.x, @selected.y, @selected.cell, n
   clear: ->
     if @selected and @selected.cell.type is 'user'
-      @data.input[@selected.y][@selected.x] = null
-      @selected.cell.value = null
-      @selected.cell.element.innerText = ''
-      @emit 'input', { x: @selected.x, y: @selected.y, n: null }
+      @_fill @selected.x, @selected.y, @selected.cell, null
+  provideHint: ->
+    sx = Math.floor(Math.random() * 9)
+    sy = Math.floor(Math.random() * 9)
+    for x in [0..8]
+      for y in [0..8]
+        cx = (sx + x) % 9
+        cy = (sy + y) % 9
+        c = @cell cx, cy
+        if c.value is null
+          n = @data.solution[cy][cx]
+          @select cx, cy
+          @_fill cx, cy, c, n
+          return true
+    return false
   isValid: ->
 
     val = (x, y) => @cell(x, y).value

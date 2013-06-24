@@ -27,6 +27,9 @@ window.pauseGame = ->
   currentGame = null
   showList()
 
+window.provideHint = ->
+  instance.provideHint()
+
 window.loadGame = (id) ->
   game = persistence.getGame id
   currentGame = id
