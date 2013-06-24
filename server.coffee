@@ -45,6 +45,10 @@ if cluster.isMaster
     res.set 'Content-Type', 'image/svg+xml'
     res.sendfile __dirname + '/assets/skull.svg'
 
+  app.get '/circle.svg', (req, res) ->
+    res.set 'Content-Type', 'image/svg+xml'
+    res.sendfile __dirname + '/assets/circle.svg'
+
   app.get '/sudoku', (req, res) ->
     worker.once 'message', (msg) ->
       res.send 200, msg
