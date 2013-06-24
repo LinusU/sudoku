@@ -5,6 +5,7 @@ persistence = new Persistence
 
 # For debug only
 window.instance = instance
+window.persistence = persistence
 
 if ('ontouchstart' of window)
   touchCtrl = new TouchCtrl
