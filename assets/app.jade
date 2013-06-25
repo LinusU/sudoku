@@ -11,6 +11,11 @@ html
     #list
       .new(onclick='newGame()') New game
       #games
+    #levels(style='display: none;')
+      div(onclick='loadNewGame(1)')!= '<i></i><b></b><b></b><b></b>'
+      div(onclick='loadNewGame(2)')!= '<i></i><i></i><b></b><b></b>'
+      div(onclick='loadNewGame(3)')!= '<i></i><i></i><i></i><b></b>'
+      div(onclick='loadNewGame(4)')!= '<i></i><i></i><i></i><i></i>'
     #main(style='display: none;')
       .back(onclick='pauseGame()') Back
       .hint(onclick='provideHint()') Hint

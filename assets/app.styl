@@ -5,6 +5,17 @@ btn()
   background #eee
   cursor pointer
 
+icons(size)
+  i, b
+    display inline-block
+    background-size cover
+    width size
+    height size
+  i
+    background url(/skull.svg)
+  b
+    background url(/circle.svg)
+
 body
   width 542px
   margin 0 auto
@@ -21,6 +32,14 @@ body
   #game
     clear both
 
+#levels
+  div
+    btn()
+    icons(20px)
+    margin 12px 0
+    line-height 0
+
+
 #list
   .new
     btn()
@@ -36,12 +55,4 @@ body
     .diff
       padding 4px 0
       text-align center
-      i, b
-        display inline-block
-        background-size cover
-        width 14px
-        height 14px
-      i
-        background url(/skull.svg)
-      b
-        background url(/circle.svg)
+      icons(14px)

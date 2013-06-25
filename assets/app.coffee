@@ -41,7 +41,12 @@ window.loadGame = (id) ->
   document.getElementById('list').style.display = 'none'
 
 window.newGame = ->
+  document.getElementById('levels').style.display = 'block'
+  document.getElementById('list').style.display = 'none'
 
+window.loadNewGame = (level) ->
+
+  document.getElementById('levels').style.display = 'none'
   req = new XMLHttpRequest
 
   req.onreadystatechange = ->
@@ -50,9 +55,8 @@ window.newGame = ->
       currentGame = persistence.addGame game
       instance.load game
       document.getElementById('main').style.display = 'block'
-      document.getElementById('list').style.display = 'none'
 
-  req.open 'GET', '/sudoku', true
+  req.open 'GET', '/sudoku/' + level, true
   req.send()
 
 window.showList = ->
