@@ -4,6 +4,7 @@ assman = require 'assman'
 assman.top __dirname + '/..'
 
 assman.register 'js', 'app', [
+  'assets/hint.coffee'
   'assets/sudoku.coffee'
   'assets/persistence.coffee'
   'assets/touch-ctrl.coffee'

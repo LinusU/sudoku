@@ -31,7 +31,11 @@ window.pauseGame = ->
   showList()
 
 window.provideHint = ->
-  instance.provideHint()
+  # instance.provideHint()
+  hint = new Hint instance.cells
+  # for debug only
+  window.hint = hint
+  alert hint.hints().map((e) -> JSON.stringify(e)).join('\n')
 
 window.loadGame = (id) ->
   game = persistence.getGame id
