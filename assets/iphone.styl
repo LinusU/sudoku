@@ -20,18 +20,45 @@ icons(size)
   b
     background url(/circle.svg)
 
+_triangle(size)
+  content ''
+  position absolute
+  top 0
+  width 0px
+  height 0px
+  border-style solid
+
+triangleAfter(size)
+  position relative
+  &:after
+    _triangle(size)
+    right -1 * size
+    border-width size size 0 0
+    border-color #ccc transparent transparent transparent
+
+triangleBefore(size)
+  position relative
+  &:before
+    _triangle(size)
+    left -1 * size
+    border-width 0 0 size size
+    border-color transparent transparent #ccc transparent
+
 body
   font-family 'Gill Sans', sans-serif
   background-image url(/background.png)
   animation slide 10s infinite
   animation-timing-function linear
+  width 320px
+  height 440px
+  overflow hidden
 
 #slider
   width 300px
-  height 300px
+  height 276px
   .game
     width 146px
-    margin 64px auto
+    margin 52px auto
     .diff
       padding 4px 0
       text-align center
@@ -47,44 +74,47 @@ body
     opacity 0.8
 
 h1
-  position relative
   background #ccc
-  margin 10px 0 10px -10px
-  padding 0 16px
+  margin 20px 0
+  padding 0 12px 0 20px
   display inline-block
-  line-height 40px
+  line-height 50px
   clear both
-  &:after
-    content ''
-    position absolute
-    top 0
-    right -40px
-    width 0px
-    height 0px
-    border-style solid
-    border-width 40px 40px 0 0
-    border-color #ccc transparent transparent transparent
+  triangleAfter(50px)
 
 #menu
   .new
-    btn()
+    width 120px
+    margin 0 0 10px
+    line-height 35px
+    background #ccc
+    text-align center
+    triangleAfter(35px)
 
 #levels
   div
-    btn()
     icons(20px)
-    margin 20px
-    padding 12px 0
-    line-height 0
+    width 130px
+    margin 0 0 24px
+    line-height 35px
+    background #ccc
+    text-align center
+    triangleAfter(35px)
+    i, b
+      vertical-align -5px
 
 #main
   .back, .hint
-    btn()
-    width 120px
-  .back
     float left
+    width 138px
+    text-align center
+    line-height 35px
+    background #ccc
+  .back
+    triangleAfter(35px)
+    margin 0 44px 0 0
   .hint
-    float right
+    triangleBefore(35px)
 
 #game
   transform-origin 0 0
@@ -95,6 +125,50 @@ h1
 .touch-ctrl
   transform scale(0.5)
   box-shadow 0px 0px 80px black
+
+#menu, #levels, #main
+  position absolute
+  top 0
+  left 0
+  width 320px
+  height 440px
+  overflow hidden
+  &.hide
+    pointer-events none
+  h1, div, .new, #game, #slider, #indicator
+    transition transform 660ms
+
+#menu.hide
+  h1
+    transform translateX(-400px)
+  .new
+    transform translateX(-600px)
+  #slider, #indicator
+    transform translateY(500px)
+
+#levels.hide
+  h1
+    transform translateX(-500px)
+  div:nth-child(2)
+    transform translateX(-300px)
+  div:nth-child(3)
+    transform translateX(-600px)
+  div:nth-child(4)
+    transform translateX(-900px)
+  div:nth-child(5)
+    transform translateX(-1200px)
+  div:nth-child(6)
+    transform translateX(-1500px)
+
+#main.hide
+  h1
+    transform translateX(-400px)
+  .back
+    transform translateX(-600px)
+  .hint
+    transform translateX(600px)
+  #game
+    transform translateY(500px)
 
 @keyframes slide
   0%

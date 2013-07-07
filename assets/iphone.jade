@@ -15,14 +15,15 @@ html
       #slider
       #indicator
 
-    #levels(style='display: none;')
+    #levels.hide
       h1 Choose difficulty
+      div(ontouchstart='mainMenu()') Back
       div(ontouchstart='loadNewGame(1)')!= '<i></i><b></b><b></b><b></b>'
       div(ontouchstart='loadNewGame(2)')!= '<i></i><i></i><b></b><b></b>'
       div(ontouchstart='loadNewGame(3)')!= '<i></i><i></i><i></i><b></b>'
       div(ontouchstart='loadNewGame(4)')!= '<i></i><i></i><i></i><i></i>'
 
-    #main(style='display: none;')
+    #main.hide
       h1 Puzzle
       div(style='overflow: hidden;')
         .back(ontouchstart='pauseGame()') Back
