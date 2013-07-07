@@ -1,42 +1,19 @@
 
-currentGame = null
-instance = new Sudoku document.getElementById 'game'
-persistence = new Persistence
-
-# For debug only
-window.instance = instance
-window.persistence = persistence
-
-if ('ontouchstart' of window)
-  touchCtrl = new TouchCtrl
-  touchCtrl.setSudoku instance
-else
-  keyboardCtrl = new KeyboardCtrl
-  keyboardCtrl.setSudoku instance
-
-instance.on 'input', ->
-  if currentGame is null then throw Error('No current game')
-  if instance.isValid()
-    setTimeout ->
-      alert 'Puzzle solved!'
-      persistence.removeGame currentGame
-      currentGame = null
-      showList()
-    , 1
-  else
-    persistence.updateGame currentGame, instance.data
+game.on 'completed', ->
+  setTimeout ->
+    alert 'Puzzle solved!'
+    showList()
+  , 1
 
 window.pauseGame = ->
-  currentGame = null
+  game.close()
   showList()
 
 window.provideHint = ->
-  instance.provideHint()
+  game.provideHint()
 
 window.loadGame = (id) ->
-  game = persistence.getGame id
-  currentGame = id
-  instance.load game
+  game.load id
   document.getElementById('main').style.display = 'block'
   document.getElementById('list').style.display = 'none'
 
@@ -45,26 +22,16 @@ window.newGame = ->
   document.getElementById('list').style.display = 'none'
 
 window.loadNewGame = (level) ->
-
   document.getElementById('levels').style.display = 'none'
-  req = new XMLHttpRequest
-
-  req.onreadystatechange = ->
-    if req.readyState is 4 and req.status is 200
-      game = JSON.parse(req.responseText)
-      currentGame = persistence.addGame game
-      instance.load game
-      document.getElementById('main').style.display = 'block'
-
-  req.open 'GET', '/sudoku/' + level, true
-  req.send()
+  game.new level, ->
+    document.getElementById('main').style.display = 'block'
 
 window.showList = ->
 
   while (c = document.getElementById('games').firstChild)
     document.getElementById('games').removeChild c
 
-  list = persistence.listGames()
+  list = game.list()
 
   list.forEach (data) ->
     el = document.createElement 'div'
@@ -89,9 +56,5 @@ window.showList = ->
 
   document.getElementById('main').style.display = 'none'
   document.getElementById('list').style.display = 'block'
-
-window.addEventListener 'beforeunload', ->
-  if currentGame
-    persistence.updateGame currentGame, instance.data
 
 showList()

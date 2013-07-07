@@ -1,0 +1,103 @@
+
+btn()
+  width auto
+  font-size 24pt
+  background hsl(151, 68%, 88%)
+  border 4px solid hsl(151, 68%, 50%)
+  border-radius 8px
+  text-align center
+  margin 8px
+  padding 4px 0
+
+icons(size)
+  i, b
+    display inline-block
+    background-size cover
+    width size
+    height size
+  i
+    background url(/skull.svg)
+  b
+    background url(/circle.svg)
+
+body
+  font-family 'Gill Sans', sans-serif
+  background-image url(/background.png)
+  animation slide 10s infinite
+  animation-timing-function linear
+
+#slider
+  width 300px
+  height 300px
+  .game
+    width 146px
+    margin 64px auto
+    .diff
+      padding 4px 0
+      text-align center
+      icons(14px)
+
+#indicator
+  icons(14px)
+  text-align center
+  b
+    opacity 0.4
+    transition opacity 220ms
+  b.active
+    opacity 0.8
+
+h1
+  position relative
+  background #ccc
+  margin 10px 0 10px -10px
+  padding 0 16px
+  display inline-block
+  line-height 40px
+  clear both
+  &:after
+    content ''
+    position absolute
+    top 0
+    right -40px
+    width 0px
+    height 0px
+    border-style solid
+    border-width 40px 40px 0 0
+    border-color #ccc transparent transparent transparent
+
+#menu
+  .new
+    btn()
+
+#levels
+  div
+    btn()
+    icons(20px)
+    margin 20px
+    padding 12px 0
+    line-height 0
+
+#main
+  .back, .hint
+    btn()
+    width 120px
+  .back
+    float left
+  .hint
+    float right
+
+#game
+  transform-origin 0 0
+  transform scale(0.5)
+  margin 32px 16px
+  clear both
+
+.touch-ctrl
+  transform scale(0.5)
+  box-shadow 0px 0px 80px black
+
+@keyframes slide
+  0%
+    background-position 0 0
+  100%
+    background-position -1082px -1082px

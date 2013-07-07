@@ -1,0 +1,32 @@
+!!! 5
+html
+  head
+    title Sudoku
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=320, maximum-scale=1, user-scalable=no')#viewport
+    meta(name='apple-mobile-web-app-capable', content='yes')
+    link(rel='stylesheet', type='text/css', href='/iphone.css')
+    link(rel='apple-touch-icon', sizes='144x144', href='/touch-icon-144.png')
+  body
+
+    #menu
+      h1 Main menu
+      .new(ontouchstart='newGame()') New game
+      #slider
+      #indicator
+
+    #levels(style='display: none;')
+      h1 Choose difficulty
+      div(ontouchstart='loadNewGame(1)')!= '<i></i><b></b><b></b><b></b>'
+      div(ontouchstart='loadNewGame(2)')!= '<i></i><i></i><b></b><b></b>'
+      div(ontouchstart='loadNewGame(3)')!= '<i></i><i></i><i></i><b></b>'
+      div(ontouchstart='loadNewGame(4)')!= '<i></i><i></i><i></i><i></i>'
+
+    #main(style='display: none;')
+      h1 Puzzle
+      div(style='overflow: hidden;')
+        .back(ontouchstart='pauseGame()') Back
+        .hint(ontouchstart='provideHint()') Hint
+      #game
+
+    script(type='text/javascript', src='/iphone.js')
