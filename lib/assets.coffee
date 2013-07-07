@@ -39,7 +39,7 @@ assman.register 'css', 'iphone', [
 assman.register 'html', 'iphone', [ 'assets/iphone.jade' ]
 
 assman.register 'png', 'touch-icon-144', [ 'assets/touch-icon-144.png' ]
-assman.register 'png', 'background', [ 'assets/background.png' ]
+assman.register 'jpg', 'background', [ 'assets/background.jpg' ]
 
 assman.register 'svg', 'circle', [ 'assets/circle.svg' ]
 
