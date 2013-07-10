@@ -178,6 +178,20 @@ h1
     .btn:nth-child(2)
       transform translateX(600px)
 
+.btn.update
+  animation blink 550ms infinite
+  animation-direction alternate
+  animation-timing-function linear
+  transition transform 330ms
+  &.hide
+    transform translateX(-300px)
+
+@keyframes blink
+  0%
+    color black
+  100%
+    color red
+
 @keyframes slide
   0%
     background-position 0 0
