@@ -48,7 +48,12 @@ assman.register 'svg', 'circle', [ 'assets/circle.svg' ]
 # http://thenounproject.com/noun/skull/#icon-No6998
 assman.register 'svg', 'skull', [ 'assets/skull.svg' ]
 
-cacheDate = Date.now()
+cacheDate = do ->
+  if (process.env.NODE_ENV || 'production') is 'development'
+    -> Date.now()
+  else
+    cacheDate = Date.now()
+    -> cacheDate
 
 module.exports = exports =
   middleware: assman.middleware
@@ -56,7 +61,7 @@ module.exports = exports =
     res.set 'Content-Type', 'text/cache-manifest'
     res.send 200, """
       CACHE MANIFEST
-      # #{cacheDate}
+      # #{cacheDate()}
 
       CACHE:
       # App
