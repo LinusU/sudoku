@@ -6,7 +6,8 @@ Warehouse = require './warehouse'
 games = new Warehouse [1,2,3,4], 4
 app = express()
 
-app.use assets
+app.use assets.middleware
+app.get '/cache.mf', assets.manifest
 
 app.get '/', (req, res) ->
   res.redirect '/app.html'

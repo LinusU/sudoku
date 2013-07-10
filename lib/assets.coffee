@@ -47,4 +47,26 @@ assman.register 'svg', 'circle', [ 'assets/circle.svg' ]
 # http://thenounproject.com/noun/skull/#icon-No6998
 assman.register 'svg', 'skull', [ 'assets/skull.svg' ]
 
-module.exports = exports = assman.middleware
+module.exports = exports =
+  middleware: assman.middleware
+  manifest: (req, res) ->
+    res.set 'Content-Type', 'text/cache-manifest'
+    res.send 200, """
+      CACHE MANIFEST
+      # #{Date.now()}
+
+      CACHE:
+      # App
+      /iphone.js
+      /iphone.css
+      /iphone.html
+      # SVG
+      /skull.svg
+      /circle.svg
+      # Background
+      /background.jpg
+
+      NETWORK:
+      /sudoku
+
+    """
