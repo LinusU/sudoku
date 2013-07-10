@@ -12,23 +12,30 @@ html(manifest='/cache.mf')
 
     #menu
       h1 Main menu
-      .new(ontouchstart='newGame()') New game
+      .btn(ontouchstart='newGame()') New game
+      .btn.load(ontouchstart='loadGame()') Load game
+
+    #load.hide
+      h1 Select game
+      div.leftright
+        .btn(ontouchstart='mainMenu()') Back
+        .btn(ontouchstart='loadSelectedGame()') Continue
       #slider
       #indicator
 
     #levels.hide
       h1 Choose difficulty
-      div(ontouchstart='mainMenu()') Back
-      div(ontouchstart='loadNewGame(1)')!= '<i></i><b></b><b></b><b></b>'
-      div(ontouchstart='loadNewGame(2)')!= '<i></i><i></i><b></b><b></b>'
-      div(ontouchstart='loadNewGame(3)')!= '<i></i><i></i><i></i><b></b>'
-      div(ontouchstart='loadNewGame(4)')!= '<i></i><i></i><i></i><i></i>'
+      .btn(ontouchstart='mainMenu()') Back
+      .btn(ontouchstart='loadNewGame(1)')!= '<i></i><b></b><b></b><b></b>'
+      .btn(ontouchstart='loadNewGame(2)')!= '<i></i><i></i><b></b><b></b>'
+      .btn(ontouchstart='loadNewGame(3)')!= '<i></i><i></i><i></i><b></b>'
+      .btn(ontouchstart='loadNewGame(4)')!= '<i></i><i></i><i></i><i></i>'
 
     #main.hide
       h1 Puzzle
-      div(style='overflow: hidden;')
-        .back(ontouchstart='pauseGame()') Back
-        .hint(ontouchstart='provideHint()') Hint
+      div.leftright
+        .btn(ontouchstart='pauseGame()') Back
+        .btn(ontouchstart='provideHint()') Hint
       #game
 
     script(type='text/javascript', src='/iphone.js')

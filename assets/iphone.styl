@@ -89,14 +89,13 @@ h1
   clear both
   triangleAfter(50px)
 
-#menu
-  .new
-    width 120px
-    margin 0 0 10px
-    line-height 35px
-    background #ccc
-    text-align center
-    triangleAfter(35px)
+.btn
+  width 130px
+  margin 0 0 10px
+  line-height 35px
+  background #ccc
+  text-align center
+  triangleAfter(35px)
 
 #levels
   div
@@ -110,30 +109,17 @@ h1
     i, b
       vertical-align -5px
 
-#main
-  .back, .hint
-    float left
-    width 138px
-    text-align center
-    line-height 35px
-    background #ccc
-  .back
-    triangleAfter(35px)
-    margin 0 44px 0 0
-  .hint
-    triangleBefore(35px)
-
 #game
   transform-origin 0 0
   transform scale(0.5)
-  margin 32px 16px
-  clear both
+  margin 24px auto
+  width 270px
 
 .touch-ctrl
   transform scale(0.5)
   box-shadow 0px 0px 80px black
 
-#menu, #levels, #main
+#menu, #load, #levels, #main
   position absolute
   top 0
   left 0
@@ -142,20 +128,20 @@ h1
   overflow hidden
   &.hide
     pointer-events none
+    h1
+      transform translateX(-400px)
   h1, div, .new, #game, #slider, #indicator
     transition transform 660ms
 
 #menu.hide
-  h1
-    transform translateX(-400px)
-  .new
+  .btn
     transform translateX(-600px)
+
+#load.hide
   #slider, #indicator
     transform translateY(500px)
 
 #levels.hide
-  h1
-    transform translateX(-500px)
   div:nth-child(2)
     transform translateX(-300px)
   div:nth-child(3)
@@ -168,14 +154,29 @@ h1
     transform translateX(-1500px)
 
 #main.hide
-  h1
-    transform translateX(-400px)
-  .back
-    transform translateX(-600px)
-  .hint
-    transform translateX(600px)
   #game
     transform translateY(500px)
+
+.leftright
+  overflow hidden
+  .btn
+    float left
+    width 138px
+    text-align center
+    line-height 35px
+    background #ccc
+  .btn:nth-child(1)
+    triangleAfter(35px)
+    margin 0 44px 0 0
+  .btn:nth-child(2)
+    triangleBefore(35px)
+
+.hide
+  .leftright
+    .btn:nth-child(1)
+      transform translateX(-600px)
+    .btn:nth-child(2)
+      transform translateX(600px)
 
 @keyframes slide
   0%

@@ -27,6 +27,7 @@ assman.register 'js', 'iphone', [
   'assets/touch-ctrl.coffee'
   'assets/keyboard-ctrl.coffee'
   'assets/game.coffee'
+  'assets/carousel.coffee'
   'assets/iphone.coffee'
   'assets/cache.coffee'
 ]
