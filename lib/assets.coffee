@@ -28,6 +28,7 @@ assman.register 'js', 'iphone', [
   'assets/keyboard-ctrl.coffee'
   'assets/game.coffee'
   'assets/iphone.coffee'
+  'assets/cache.coffee'
 ]
 
 assman.register 'css', 'iphone', [
@@ -47,13 +48,15 @@ assman.register 'svg', 'circle', [ 'assets/circle.svg' ]
 # http://thenounproject.com/noun/skull/#icon-No6998
 assman.register 'svg', 'skull', [ 'assets/skull.svg' ]
 
+cacheDate = Date.now()
+
 module.exports = exports =
   middleware: assman.middleware
   manifest: (req, res) ->
     res.set 'Content-Type', 'text/cache-manifest'
     res.send 200, """
       CACHE MANIFEST
-      # #{Date.now()}
+      # #{cacheDate}
 
       CACHE:
       # App
