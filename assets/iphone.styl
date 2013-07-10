@@ -166,9 +166,9 @@ h1
 .hide
   .leftright
     .btn:nth-child(1)
-      transform translateX(-600px)
+      transform translateX(-620px)
     .btn:nth-child(2)
-      transform translateX(600px)
+      transform translateX(620px)
 
 .btn.update
   animation blink 550ms infinite
@@ -189,3 +189,45 @@ h1
     background-position 0 0
   100%
     background-position -1082px -1082px
+
+@media all and (orientation:landscape)
+  #levels
+    width 100%
+    .btn
+      float right
+      clear right
+      position relative
+      top -55px
+      triangleBefore(35px)
+      &:nth-child(2)
+        top 0
+        float none
+        clear none
+  #load
+    width 100%
+    .btn
+      float left
+      clear left
+    #slider
+      position relative
+      top -142px
+      left 175px
+    #indicator
+      width 320px
+      position relative
+      top -185px
+      left 175px
+  #main
+    width 100%
+    .btn
+      float left
+      clear left
+    #game
+      position relative
+      top -184px
+      left 95px
+  .touch-ctrl
+    margin 0
+    top -75px
+    left 160px
+
