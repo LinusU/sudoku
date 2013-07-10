@@ -53,8 +53,8 @@ cacheDate = do ->
   if (process.env.NODE_ENV || 'production') is 'development'
     -> Date.now()
   else
-    cacheDate = Date.now()
-    -> cacheDate
+    date = Date.now()
+    -> date
 
 module.exports = exports =
   middleware: assman.middleware
