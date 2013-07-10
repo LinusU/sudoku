@@ -3,8 +3,7 @@ class TouchCtrl
   constructor: ->
     @sudoku = null
     @el = document.createElement 'table'
-    @el.className = 'touch-ctrl'
-    @el.style.display = 'none'
+    @el.className = 'touch-ctrl hide'
     document.body.appendChild @el
     row = null
     [1..9].forEach (n) =>
@@ -32,15 +31,15 @@ class TouchCtrl
       @show()
   fill: (n)->
     if @sudoku
-      @sudoku.fill(n);
-    @hide();
+      @sudoku.fill(n)
+    @hide()
   clear: ->
     if @sudoku
-      @sudoku.clear();
-    @hide();
+      @sudoku.clear()
+    @hide()
   show: ->
-    @el.style.display = 'table';
+    @el.classList.remove 'hide'
   hide: ->
-    @el.style.display = 'none';
+    @el.classList.add 'hide'
 
 window.TouchCtrl = TouchCtrl

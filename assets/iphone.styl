@@ -44,17 +44,24 @@ triangleBefore(size)
     border-width 0 0 size size
     border-color transparent transparent #ccc transparent
 
+html, body
+  margin 0
+  padding 0
+
 body
   font-family 'Gill Sans', sans-serif
   background-image url(/background.jpg)
   animation slide 10s infinite
   animation-timing-function linear
-  width 320px
-  height 440px
+  position fixed
+  top 0
+  left 0
+  right 0
+  bottom 0
   overflow hidden
 
 #slider
-  width 300px
+  width 320px
   height 276px
   .game
     width 146px
