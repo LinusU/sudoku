@@ -39,16 +39,32 @@ window.game =
     currentGame = id
     instance.load game
   new: (level, cb) ->
-    req = new XMLHttpRequest
+    if level is 1
 
-    req.onreadystatechange = ->
-      if req.readyState is 4 and req.status is 200
-        game = JSON.parse(req.responseText)
-        currentGame = persistence.addGame game
-        instance.load game
-        cb()
+      gen = HLS.generateSudoku()
+      game = {
+        puzzle: gen.instance.export()
+        solution: gen.filled.export()
+        difficulty: 0
+      }
 
-    req.open 'GET', '/sudoku/' + level, true
-    req.send()
+      currentGame = persistence.addGame game
+      instance.load game
+      cb()
+
+    else
+
+      req = new XMLHttpRequest
+
+      req.onreadystatechange = ->
+        if req.readyState is 4 and req.status is 200
+          game = JSON.parse(req.responseText)
+          currentGame = persistence.addGame game
+          instance.load game
+          cb()
+
+      req.open 'GET', '/sudoku/' + level, true
+      req.send()
+
   list: ->
     persistence.listGames()

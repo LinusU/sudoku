@@ -8,6 +8,7 @@ assman.register 'js', 'app', [
   'assets/persistence.coffee'
   'assets/touch-ctrl.coffee'
   'assets/keyboard-ctrl.coffee'
+  'assets/hls.coffee'
   'assets/game.coffee'
   'assets/app.coffee'
 ]
@@ -26,6 +27,7 @@ assman.register 'js', 'iphone', [
   'assets/persistence.coffee'
   'assets/touch-ctrl.coffee'
   'assets/keyboard-ctrl.coffee'
+  'assets/hls.coffee'
   'assets/game.coffee'
   'assets/carousel.coffee'
   'assets/iphone.coffee'
