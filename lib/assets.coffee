@@ -42,6 +42,8 @@ assman.register 'css', 'iphone', [
 
 assman.register 'html', 'iphone', [ 'assets/iphone.jade' ]
 
+assman.register 'js', 'worker', [ 'assets/hls.coffee', 'assets/worker.coffee' ]
+
 assman.register 'png', 'touch-icon-144', [ 'assets/touch-icon-144.png' ]
 assman.register 'jpg', 'background', [ 'assets/background.jpg' ]
 
@@ -71,6 +73,7 @@ module.exports = exports =
       /iphone.js
       /iphone.css
       /iphone.html
+      /worker.js
       # SVG
       /skull.svg
       /circle.svg

@@ -23,6 +23,20 @@ instance.on 'input', ->
   else
     persistence.updateGame currentGame, instance.data
 
+generateSudoku = do ->
+
+  w = new Worker '/worker.js'
+  fn = null
+
+  w.addEventListener 'message', (e) ->
+    fn e.data
+    fn = null
+
+  return (level, cb) ->
+    fn = cb
+    w.postMessage { level: level }
+
+
 listeners = {}
 
 window.game =
@@ -39,18 +53,12 @@ window.game =
     currentGame = id
     instance.load game
   new: (level, cb) ->
-    if level is 1
+    if level in [1, 2]
 
-      gen = HLS.generateSudoku()
-      game = {
-        puzzle: gen.instance.export()
-        solution: gen.filled.export()
-        difficulty: 0
-      }
-
-      currentGame = persistence.addGame game
-      instance.load game
-      cb()
+      generateSudoku level, (game) ->
+        currentGame = persistence.addGame game
+        instance.load game
+        cb()
 
     else
 
