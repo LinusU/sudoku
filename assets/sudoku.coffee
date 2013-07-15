@@ -11,6 +11,10 @@ class Sudoku
     @data.input[y][x] = n
     cell.value = n
     cell.element.innerText = (if n is null then '' else n)
+    if n in [null, @data.solution[y][x]]
+      cell.element.classList.remove 'invalid'
+    else
+      cell.element.classList.add 'invalid'
     @emit 'input', { x: x, y: y, n: n }
   on: (ev, fn) ->
     (@_on[ev] ||= []).push fn
@@ -48,7 +52,7 @@ class Sudoku
       @el.appendChild el
       row.forEach (cell, x) =>
         el.appendChild cell.element
-        cell.element.className = 'sudoku-cell ' + cell.type
+        cell.element.className = 'sudoku-cell ' + cell.type + (if cell.value not in [null, @data.solution[y][x]] then ' invalid' else '')
         cell.element.innerText = (if cell.value is null then '' else cell.value)
         cell.element.addEventListener 'click', (e) =>
           @emit 'click', { x: x, y: y }
