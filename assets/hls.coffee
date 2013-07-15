@@ -32,7 +32,7 @@ class HLS
 
       if ns.length is 0
         if ++err > 50
-          return HLS.generateSudoku()
+          return HLS.generateFilled()
         else
           instance.inflate last
           x = 0
