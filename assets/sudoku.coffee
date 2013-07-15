@@ -90,7 +90,7 @@ class Sudoku
         if c.value is null
           n = @data.solution[cy][cx]
           @select cx, cy
-          @_fill cx, cy, c, n
+          @fill n
           return true
     return false
   isValid: ->
