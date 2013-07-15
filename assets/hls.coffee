@@ -144,6 +144,8 @@ class HLS
 
       if level > 1
         @lockedCandidates1()
+
+      if level > 2
         @nakedPairs()
 
       if level > 0

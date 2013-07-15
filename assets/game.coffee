@@ -55,26 +55,9 @@ window.game =
     currentGame = id
     instance.load game
   new: (level, cb) ->
-    if level in [1, 2, 3]
-
-      generateSudoku level, (game) ->
-        currentGame = persistence.addGame game
-        instance.load game
-        cb()
-
-    else
-
-      req = new XMLHttpRequest
-
-      req.onreadystatechange = ->
-        if req.readyState is 4 and req.status is 200
-          game = JSON.parse(req.responseText)
-          currentGame = persistence.addGame game
-          instance.load game
-          cb()
-
-      req.open 'GET', '/sudoku/' + level, true
-      req.send()
-
+    generateSudoku level, (game) ->
+      currentGame = persistence.addGame game
+      instance.load game
+      cb()
   list: ->
     persistence.listGames()
