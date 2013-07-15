@@ -45,7 +45,7 @@ window.showList = ->
       if d is 2 then return '<i></i><i></i><b></b><b></b>'
       if d is 3 then return '<i></i><i></i><i></i><b></b>'
       if d is 4 then return '<i></i><i></i><i></i><i></i>'
-      throw new Error 'Unknown difficulty'
+      return '<b></b><b></b><b></b><b></b>'
     s = new Sudoku thumb
     s.load data.game
     el.appendChild thumb

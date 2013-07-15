@@ -33,7 +33,7 @@ window.carousel =
           if d is 2 then return '<i></i><i></i><b></b><b></b>'
           if d is 3 then return '<i></i><i></i><i></i><b></b>'
           if d is 4 then return '<i></i><i></i><i></i><i></i>'
-          throw new Error 'Unknown difficulty'
+          return '<b></b><b></b><b></b><b></b>'
         el.sudokuInstance = new Sudoku thumb
         el.sudokuInstance.load data.game
         el.appendChild thumb
@@ -56,4 +56,4 @@ window.carousel =
             if d is 2 then return '<i></i><i></i><b></b><b></b>'
             if d is 3 then return '<i></i><i></i><i></i><b></b>'
             if d is 4 then return '<i></i><i></i><i></i><i></i>'
-            throw new Error 'Unknown difficulty'
+            return '<b></b><b></b><b></b><b></b>'
