@@ -80,7 +80,4 @@ module.exports = exports =
       # Background
       /background.jpg
 
-      NETWORK:
-      /sudoku
-
     """
