@@ -163,11 +163,30 @@ h1
   .btn:nth-child(2)
     triangleBefore(35px)
 
+.leftmiddleright
+  overflow hidden
+  .btn
+    float left
+    width 77px
+    margin 0 0 10px
+  .btn:nth-child(1)
+    triangleAfter(35px)
+    margin-right 44px
+  .btn:nth-child(2)
+    triangleAfter(35px)
+    triangleBefore(35px)
+    margin-right 44px
+    width 78px
+  .btn:nth-child(3)
+    triangleBefore(35px)
+
 .hide
-  .leftright
+  .leftright, .leftmiddleright
     .btn:nth-child(1)
       transform translateX(-620px)
     .btn:nth-child(2)
+      transform translateX(620px)
+    .btn:nth-child(3)
       transform translateX(620px)
 
 .btn.update

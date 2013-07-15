@@ -5,6 +5,7 @@ class Sudoku
     @selected = null
     @data = null
     @cells = []
+    @history = []
     @_on = {}
   _fill: (x, y, cell, n) ->
     @data.input[y][x] = n
@@ -18,6 +19,7 @@ class Sudoku
   load: (@data) ->
     while @el.firstChild
       @el.removeChild @el.firstChild
+    @history = []
     @selected = null
     @cells = @data.puzzle.map (row) ->
       row.map (n) ->
@@ -64,11 +66,18 @@ class Sudoku
       @select (@selected.x + 9 + dx) % 9, (@selected.y + 9 + dy) % 9
     else
       @select (4 + dx), (4 + dy)
+  undo: ->
+    if @history.length
+      move = @history.pop()
+      @select move.x, move.y
+      @_fill move.x, move.y, @selected.cell, move.n
   fill: (n) ->
     if @selected and @selected.cell.type is 'user'
+      @history.push { x: @selected.x, y: @selected.y, n: @selected.cell.value }
       @_fill @selected.x, @selected.y, @selected.cell, n
   clear: ->
     if @selected and @selected.cell.type is 'user'
+      @history.push { x: @selected.x, y: @selected.y, n: @selected.cell.value }
       @_fill @selected.x, @selected.y, @selected.cell, null
   provideHint: ->
     sx = Math.floor(Math.random() * 9)

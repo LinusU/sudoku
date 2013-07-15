@@ -46,6 +46,8 @@ window.game =
     (listeners[ev] ||= []).forEach (fn) -> fn data
   close: ->
     currentGame = null
+  undo: ->
+    instance.undo()
   provideHint: ->
     instance.provideHint()
   load: (id) ->

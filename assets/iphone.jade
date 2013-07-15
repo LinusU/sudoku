@@ -34,8 +34,9 @@ html(manifest='/cache.mf')
 
     #main.hide
       h1 Puzzle
-      div.leftright
+      div.leftmiddleright
         .btn(ontouchstart='pauseGame()') Back
+        .btn(ontouchstart='undoMove()') Undo
         .btn(ontouchstart='provideHint()') Hint
       #game
 

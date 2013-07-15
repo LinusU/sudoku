@@ -8,6 +8,9 @@ game.on 'completed', ->
     mainMenu()
   , 1
 
+window.undoMove = ->
+  game.undo()
+
 window.pauseGame = ->
   game.close()
   mainMenu()
