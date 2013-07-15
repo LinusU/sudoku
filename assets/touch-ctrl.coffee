@@ -28,7 +28,8 @@ class TouchCtrl
   setSudoku: (@sudoku) ->
     @sudoku.on 'touch', (data) =>
       @sudoku.select data.x, data.y
-      @show()
+      if @sudoku.selected.cell.type is 'user'
+        @show()
   fill: (n)->
     if @sudoku
       @sudoku.fill(n)
