@@ -5,7 +5,7 @@ self.addEventListener 'message', (e) ->
   game = {
     puzzle: gen.instance.export()
     solution: gen.filled.export()
-    difficulty: 0
+    difficulty: e.data.level
   }
 
   self.postMessage game

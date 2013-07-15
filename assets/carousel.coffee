@@ -29,10 +29,10 @@ window.carousel =
         diff = document.createElement 'div'
         diff.className = 'diff'
         diff.innerHTML = do (d = data.game.difficulty) ->
-          if d < 1 then return '<i></i><b></b><b></b><b></b>'
-          if d < 2 then return '<i></i><i></i><b></b><b></b>'
-          if d < 4 then return '<i></i><i></i><i></i><b></b>'
-          if d < 8 then return '<i></i><i></i><i></i><i></i>'
+          if d is 1 then return '<i></i><b></b><b></b><b></b>'
+          if d is 2 then return '<i></i><i></i><b></b><b></b>'
+          if d is 3 then return '<i></i><i></i><i></i><b></b>'
+          if d is 4 then return '<i></i><i></i><i></i><i></i>'
           throw new Error 'Unknown difficulty'
         el.sudokuInstance = new Sudoku thumb
         el.sudokuInstance.load data.game
@@ -52,8 +52,8 @@ window.carousel =
           el.sudokuInstance.load data.game
           diff = el.querySelector '.diff'
           diff.innerHTML = do (d = data.game.difficulty) ->
-            if d < 1 then return '<i></i><b></b><b></b><b></b>'
-            if d < 2 then return '<i></i><i></i><b></b><b></b>'
-            if d < 4 then return '<i></i><i></i><i></i><b></b>'
-            if d < 8 then return '<i></i><i></i><i></i><i></i>'
+            if d is 1 then return '<i></i><b></b><b></b><b></b>'
+            if d is 2 then return '<i></i><i></i><b></b><b></b>'
+            if d is 3 then return '<i></i><i></i><i></i><b></b>'
+            if d is 4 then return '<i></i><i></i><i></i><i></i>'
             throw new Error 'Unknown difficulty'
