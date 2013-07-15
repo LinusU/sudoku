@@ -71,24 +71,41 @@ class HLS
 
   @generateSudoku: (level) ->
 
+    last = null
     filled = HLS.generateFilled()
-    instance = new HLS
+    instance = HLS.inflate filled.deflate()
 
-    fillRandom = ->
+    clearRandom = ->
       sx = Math.floor(Math.random() * 9)
       sy = Math.floor(Math.random() * 9)
       for x in [0..8]
         for y in [0..8]
           cx = (sx + x) % 9
           cy = (sy + y) % 9
-          if Array.isArray instance.board[cy][cx]
-            instance.fill cx, cy, filled.board[cy][cx]
+          unless Array.isArray instance.board[cy][cx]
+            instance.clear cx, cy
             return true
       return false
 
-    while fillRandom()
+    tries = switch level
+      when 0 then 0
+      when 1 then 6
+      when 2 then 12
+      when 3 then 24
+      when 4 then 48
+
+    while tries > 0
       if instance.isSolvable level
-        return { filled: filled, instance: instance }
+        last = instance.deflate()
+        clearRandom()
+      else
+        instance.inflate last
+        clearRandom()
+        tries--
+
+    instance.inflate last
+
+    return { filled: filled, instance: instance }
 
   constructor: ->
 
@@ -117,12 +134,16 @@ class HLS
 
   solve: (level) ->
 
+    if @numEmpty is 0
+      return true
+
     if level <= 0
-      return (@numEmpty is 0)
+      return false
 
     while true
 
       if level > 1
+        @lockedCandidates1()
         @nakedPairs()
 
       if level > 0
@@ -144,6 +165,33 @@ class HLS
     @inflate data
 
     return solvable
+
+  clear: (x, y) ->
+
+    if Array.isArray @board[y][x]
+      return false
+
+    n = @board[y][x]
+    @board[y][x] = [1..9]
+    poss = @board[y][x]
+    @numEmpty++
+
+    forEachInGroup x, y, (x, y) =>
+      cell = @board[y][x]
+      if Array.isArray cell
+        found = false
+        forEachInGroup x, y, (x, y) =>
+          c = @board[y][x]
+          unless Array.isArray c
+            if c is n
+              found = true
+        unless found
+          cell.push n
+          cell.sort()
+      else
+        removeFromArray poss, cell
+
+    return true
 
   fill: (x, y, n) ->
 
@@ -243,6 +291,45 @@ class HLS
     post = ->
 
     runEachGroup pre, fn, post
+
+  lockedCandidates1: ->
+
+    for n in [0..8]
+      for z in [0..8]
+
+        matches = []
+
+        for p in [0..8]
+          [x, y] = getXY 'zone', z, p
+          ns = @board[y][x]
+          if Array.isArray ns
+            if n in ns
+              matches.push [x, y]
+
+        if matches.length > 1
+          x = matches[0][0]
+          y = matches[0][1]
+          sameX = true
+          sameY = true
+          for m in matches
+            if m[0] isnt x
+              sameX = false
+            if m[1] isnt y
+              sameY = false
+          if sameX
+            ys = matches.map (e) -> e[1]
+            for yy in [0..8]
+              if yy not in ys
+                ns = @board[yy][x]
+                if Array.isArray ns
+                  removeFromArray ns, n
+          if sameY
+            xs = matches.map (e) -> e[0]
+            for xx in [0..8]
+              if xx not in xs
+                ns = @board[y][xx]
+                if Array.isArray ns
+                  removeFromArray ns, n
 
 try
   module.exports = HLS

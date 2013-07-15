@@ -53,7 +53,7 @@ window.game =
     currentGame = id
     instance.load game
   new: (level, cb) ->
-    if level in [1, 2]
+    if level in [1, 2, 3]
 
       generateSudoku level, (game) ->
         currentGame = persistence.addGame game
