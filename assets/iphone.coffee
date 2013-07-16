@@ -4,8 +4,8 @@ document.body.addEventListener 'touchmove', (e) ->
 
 game.on 'completed', ->
   setTimeout ->
-    alert 'Puzzle solved!'
-    mainMenu()
+    document.getElementById('main').classList.add 'hide'
+    document.getElementById('solved').classList.remove 'hide'
   , 1
 
 window.undoMove = ->
@@ -23,6 +23,7 @@ window.mainMenu = ->
   document.getElementById('main').classList.add 'hide'
   document.getElementById('load').classList.add 'hide'
   document.getElementById('levels').classList.add 'hide'
+  document.getElementById('solved').classList.add 'hide'
   document.getElementById('menu').classList.remove 'hide'
 
 window.loadGame = ->

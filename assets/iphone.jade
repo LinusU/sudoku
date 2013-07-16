@@ -40,4 +40,9 @@ html(manifest='/cache.mf')
         .btn(ontouchstart='provideHint()') Hint
       #game
 
+    #solved.hide
+      h1 Puzzle solved
+      div.success ✔
+      div.btn(ontouchstart='mainMenu()') Continue
+
     script(type='text/javascript', src='/iphone.js')
