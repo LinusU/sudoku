@@ -107,9 +107,23 @@ h1
 
 #game
   transform-origin 0 0
-  transform scale(0.5)
   margin 24px auto
   width 270px
+  height 270px
+  .sudoku-row
+    width 270px
+    height 29px
+    &:nth-child(9)
+      height 30px
+      .sudoku-cell
+        height 30px
+    .sudoku-cell
+      width 29px
+      height 29px
+      font-size 12pt
+      line-height 30px
+      &:nth-child(9)
+        width 30px
 
 .touch-ctrl
   transform scale(0.5)
