@@ -16,6 +16,7 @@ html(manifest='/cache.mf')
       h1 Main menu
       .btn(ontouchstart='newGame()') New game
       .btn.load(ontouchstart='loadGame()') Load game
+      .btn(ontouchstart='showSelectTheme()') Select theme
       .btn.update.hide(ontouchstart='location.reload()') Update app!
 
     #load.hide
@@ -46,6 +47,13 @@ html(manifest='/cache.mf')
       h1 Puzzle solved
       div.success ✔
       div.btn(ontouchstart='mainMenu()') Continue
+
+    #themes.hide
+      h1 Select theme
+      .theme-gray.btn(ontouchstart='setTheme("gray")') Gray
+      .theme-green.btn(ontouchstart='setTheme("green")') Green
+      .theme-blue.btn(ontouchstart='setTheme("blue")') Blue
+      .theme-red.btn(ontouchstart='setTheme("red")') Red
 
     #generating.hide Generating puzzle...
 

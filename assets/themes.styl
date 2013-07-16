@@ -1,0 +1,93 @@
+
+themeBtn(c)
+  background c
+  &:after
+    border-color c transparent transparent transparent
+  &:before
+    border-color transparent transparent c transparent
+
+themeBtnImportant(c)
+  background c !important
+  &:after
+    border-color c transparent transparent transparent !important
+  &:before
+    border-color transparent transparent c transparent !important
+
+theme(hue)
+
+  cDark = hsl(hue, 68%, 83%)
+  cLight = hsl(hue, 68%, 88%)
+  cBorderDark = hsl(hue, 68%, 50%)
+  cBorderLight = hsl(hue, 68%, 70%)
+  cSelectedDark = hsl(hue, 68%, 73%)
+  cSelectedLight = hsl(hue, 68%, 78%)
+
+  .sudoku-board
+    border-color cBorderDark
+    .sudoku-row
+      border-bottom-color cBorderLight
+      .sudoku-cell
+        color #666
+        background cDark
+        transition background 250ms
+        border-right-color cBorderLight
+        &.selected
+          background cSelectedDark
+        &.system
+          color #000
+        &.invalid
+          color #c00
+        &:nth-child(3), &:nth-child(6)
+          border-right-color cBorderDark
+      &:nth-child(3), &:nth-child(6)
+        border-bottom-color cBorderDark
+      &:nth-child(1), &:nth-child(2), &:nth-child(3),
+      &:nth-child(7), &:nth-child(8), &:nth-child(9)
+        .sudoku-cell
+          &:nth-child(4), &:nth-child(5), &:nth-child(6)
+            background cLight
+            &.selected
+              background cSelectedLight
+      &:nth-child(4), &:nth-child(5), &:nth-child(6)
+        .sudoku-cell
+          &:nth-child(1), &:nth-child(2), &:nth-child(3),
+          &:nth-child(7), &:nth-child(8), &:nth-child(9)
+            background cLight
+            &.selected
+              background cSelectedLight
+
+  .touch-ctrl
+    td
+      background cDark
+      border-color cBorderDark
+    tr:nth-child(1), tr:nth-child(3)
+      td:nth-child(2)
+        background cLight
+    tr:nth-child(2)
+      td:nth-child(1), td:nth-child(3)
+        background cLight
+    tr:nth-child(4)
+      td
+        background cLight
+
+  h1
+    themeBtn(cDark)
+
+  .btn, #generating
+    themeBtn(cLight)
+
+  &.btn
+    themeBtnImportant(cDark)
+
+.theme-gray
+  &.btn
+    themeBtnImportant(#ccc)
+
+.theme-green
+  theme(151)
+
+.theme-blue
+  theme(211)
+
+.theme-red
+  theme(331)

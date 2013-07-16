@@ -38,6 +38,7 @@ assman.register 'css', 'iphone', [
   'assets/sudoku.styl'
   'assets/touch-ctrl.styl'
   'assets/iphone.styl'
+  'assets/themes.styl'
 ]
 
 assman.register 'html', 'iphone', [ 'assets/iphone.jade' ]

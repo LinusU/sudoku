@@ -14,6 +14,7 @@ showScene = (scene) ->
   document.getElementById('load').classList.add 'hide'
   document.getElementById('levels').classList.add 'hide'
   document.getElementById('solved').classList.add 'hide'
+  document.getElementById('themes').classList.add 'hide'
   document.getElementById('generating').classList.add 'hide'
   if scene is 'generating'
     document.getElementById(scene).classList.remove 'hide'
@@ -71,4 +72,16 @@ window.loadNewGame = (level) ->
   game.new level, ->
     showScene 'main'
 
+loadTheme = (theme) ->
+  document.body.className = 'theme-' + theme
+  localStorage.setItem 'theme', theme
+
+window.setTheme = (theme) ->
+  loadTheme theme
+  mainMenu()
+
+window.showSelectTheme = (theme) ->
+  showScene 'themes'
+
+loadTheme (localStorage.getItem('theme') || 'green')
 updateMenuButtons()

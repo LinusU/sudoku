@@ -19,7 +19,7 @@ _triangle(size)
   border-style solid
 
 triangleAfter(size)
-  position relative
+  position relative unless @position
   &:after
     _triangle(size)
     right -1 * size
@@ -27,7 +27,7 @@ triangleAfter(size)
     border-color #ccc transparent transparent transparent
 
 triangleBefore(size)
-  position relative
+  position relative unless @position
   &:before
     _triangle(size)
     left -1 * size
@@ -95,6 +95,7 @@ h1
   background #ccc
   text-align center
   triangleAfter(35px)
+  triangleBefore(35px)
 
 #levels
   div
@@ -146,6 +147,7 @@ h1
     triangleBefore(35px)
 
 #generating
+  position absolute
   top 50%
   left 50%
   width 160px
@@ -156,7 +158,6 @@ h1
   text-align center
   triangleBefore(36px)
   triangleAfter(36px)
-  position absolute
   transition-duration 660ms
   &.reset
     transition-duration 0ms
@@ -164,7 +165,7 @@ h1
   &.hide
     transform translateX(400px)
 
-#menu, #load, #levels, #main, #solved
+#menu, #load, #levels, #main, #solved, #themes
   position absolute
   top 0
   left 0
@@ -186,7 +187,7 @@ h1
   #slider, #indicator
     transform translateY(500px)
 
-#levels.hide
+#levels.hide, #themes.hide
   div:nth-child(2)
     transform translateX(-300px)
   div:nth-child(3)
@@ -215,10 +216,7 @@ h1
     width 138px
     margin 0 0 10px
   .btn:nth-child(1)
-    triangleAfter(35px)
     margin-right 44px
-  .btn:nth-child(2)
-    triangleBefore(35px)
 
 .leftmiddleright
   overflow hidden
@@ -227,15 +225,10 @@ h1
     width 77px
     margin 0 0 10px
   .btn:nth-child(1)
-    triangleAfter(35px)
     margin-right 44px
   .btn:nth-child(2)
-    triangleAfter(35px)
-    triangleBefore(35px)
     margin-right 44px
     width 78px
-  .btn:nth-child(3)
-    triangleBefore(35px)
 
 .hide
   .leftright, .leftmiddleright
@@ -273,7 +266,6 @@ h1
       clear right
       position relative
       top -55px
-      triangleBefore(35px)
       &:nth-child(2)
         top 0
         float none
