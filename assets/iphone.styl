@@ -133,6 +133,25 @@ h1
     float right
     triangleBefore(35px)
 
+#generating
+  top 50%
+  left 50%
+  width 160px
+  margin-top -18px
+  margin-left -80px
+  line-height 36px
+  background #ccc
+  text-align center
+  triangleBefore(36px)
+  triangleAfter(36px)
+  position absolute
+  transition-duration 400ms
+  &.reset
+    transition-duration 0ms
+    transform translateX(-400px)
+  &.hide
+    transform translateX(400px)
+
 #menu, #load, #levels, #main, #solved
   position absolute
   top 0

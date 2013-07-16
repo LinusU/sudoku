@@ -42,7 +42,12 @@ window.newGame = ->
 
 window.loadNewGame = (level) ->
   document.getElementById('levels').classList.add 'hide'
+  document.getElementById('generating').classList.remove 'hide'
+  document.getElementById('generating').classList.add 'reset'
+  setTimeout ->
+    document.getElementById('generating').classList.remove 'reset'
   game.new level, ->
+    document.getElementById('generating').classList.add 'hide'
     document.getElementById('main').classList.remove 'hide'
 
 mainMenu()
