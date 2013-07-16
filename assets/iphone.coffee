@@ -24,6 +24,18 @@ showScene = (scene) ->
     setTimeout ->
       document.getElementById(scene).classList.remove 'hide'
 
+updateMenuButtons = ->
+  load = document.querySelector('#menu .load')
+  switch game.list().length
+    when 0
+      load.style.display = 'none'
+    when 1
+      load.innerText = 'Continue game'
+      load.style.display = 'block'
+    else
+      load.innerText = 'Load game'
+      load.style.display = 'block'
+
 window.undoMove = ->
   game.undo()
 
@@ -35,16 +47,7 @@ window.provideHint = ->
   game.provideHint()
 
 window.mainMenu = ->
-  load = document.querySelector('#menu .load')
-  switch game.list().length
-    when 0
-      load.style.display = 'none'
-    when 1
-      load.innerText = 'Continue game'
-      load.style.display = 'block'
-    else
-      load.innerText = 'Load game'
-      load.style.display = 'block'
+  updateMenuButtons()
   showScene 'menu'
 
 window.loadGame = ->
@@ -68,4 +71,4 @@ window.loadNewGame = (level) ->
   game.new level, ->
     showScene 'main'
 
-mainMenu()
+updateMenuButtons()
