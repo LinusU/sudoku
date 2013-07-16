@@ -8,6 +8,22 @@ game.on 'completed', ->
     document.getElementById('solved').classList.remove 'hide'
   , 1
 
+showScene = (scene) ->
+  document.getElementById('menu').classList.add 'hide'
+  document.getElementById('main').classList.add 'hide'
+  document.getElementById('load').classList.add 'hide'
+  document.getElementById('levels').classList.add 'hide'
+  document.getElementById('solved').classList.add 'hide'
+  document.getElementById('generating').classList.add 'hide'
+  if scene is 'generating'
+    document.getElementById(scene).classList.remove 'hide'
+    document.getElementById('generating').classList.add 'reset'
+    setTimeout ->
+      document.getElementById('generating').classList.remove 'reset'
+  else
+    setTimeout ->
+      document.getElementById(scene).classList.remove 'hide'
+
 window.undoMove = ->
   game.undo()
 
@@ -19,35 +35,37 @@ window.provideHint = ->
   game.provideHint()
 
 window.mainMenu = ->
-  document.querySelector('#menu .load').style.display = (if game.list().length then 'block' else 'none')
-  document.getElementById('main').classList.add 'hide'
-  document.getElementById('load').classList.add 'hide'
-  document.getElementById('levels').classList.add 'hide'
-  document.getElementById('solved').classList.add 'hide'
-  document.getElementById('menu').classList.remove 'hide'
+  load = document.querySelector('#menu .load')
+  switch game.list().length
+    when 0
+      load.style.display = 'none'
+    when 1
+      load.innerText = 'Continue game'
+      load.style.display = 'block'
+    else
+      load.innerText = 'Load game'
+      load.style.display = 'block'
+  showScene 'menu'
 
 window.loadGame = ->
-  window.carousel.update()
-  document.getElementById('menu').classList.add 'hide'
-  document.getElementById('load').classList.remove 'hide'
+  games = game.list()
+  if games.length is 1
+    game.load games[0].id
+    showScene 'main'
+  else
+    window.carousel.update()
+    showScene 'load'
 
 window.loadSelectedGame = ->
   game.load window.carousel.selectedId()
-  document.getElementById('load').classList.add 'hide'
-  document.getElementById('main').classList.remove 'hide'
+  showScene 'main'
 
 window.newGame = ->
-  document.getElementById('levels').classList.remove 'hide'
-  document.getElementById('menu').classList.add 'hide'
+  showScene 'levels'
 
 window.loadNewGame = (level) ->
-  document.getElementById('levels').classList.add 'hide'
-  document.getElementById('generating').classList.remove 'hide'
-  document.getElementById('generating').classList.add 'reset'
-  setTimeout ->
-    document.getElementById('generating').classList.remove 'reset'
+  showScene 'generating'
   game.new level, ->
-    document.getElementById('generating').classList.add 'hide'
-    document.getElementById('main').classList.remove 'hide'
+    showScene 'main'
 
 mainMenu()
