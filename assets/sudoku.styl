@@ -4,6 +4,7 @@
   margin 40px auto
   width 540px
   height 540px
+  position relative
   &.thumb
     width 144px
     height 144px
@@ -22,6 +23,21 @@
       line-height 16px
       &:nth-child(9)
         width 16px
+
+.sudoku-click-trap
+  position fixed
+  top 0
+  left 0
+  right 0
+  bottom 0
+  z-index 9999
+
+.sudoku-hint
+  top 0
+  left 0
+  position absolute
+  opacity .5
+  -webkit-filter blur(16px)
 
 .sudoku-board:not(.thumb)
   font-family 'Noteworthy', sans-serif

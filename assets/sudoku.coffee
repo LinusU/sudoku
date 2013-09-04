@@ -84,6 +84,110 @@ class Sudoku
       @history.push { x: @selected.x, y: @selected.y, n: @selected.cell.value }
       @_fill @selected.x, @selected.y, @selected.cell, null
   provideHint: ->
+
+    solver = new HLS()
+
+    for x in [0..8]
+      for y in [0..8]
+        c = @cell x, y
+        if c.value
+          solver.fill x, y, c.value
+
+    test = solver.hint()
+
+    if test
+      @select test.x, test.y
+      @visualizeHint test
+    else
+      @provideBadHint()
+
+  visualizeHint: (hint) ->
+
+    body = document.querySelector 'body'
+    canvas = document.createElement 'canvas'
+    ctx = canvas.getContext '2d'
+
+    bw = @el.clientWidth
+    cw = Math.round bw / 9
+
+    canvas.width = bw
+    canvas.height = bw
+    canvas.className = 'sudoku-hint'
+    @el.appendChild canvas
+
+    div = document.createElement 'div'
+    div.className = 'sudoku-click-trap'
+    body.appendChild div
+
+    evName = if ('ontouchstart' of window) then 'touchstart' else 'click'
+    div.addEventListener evName, =>
+      body.removeChild div
+      @el.removeChild canvas
+    , false
+
+    ctx.scale cw, cw
+
+    switch hint.type
+      when 'hidden-single-zone'
+        ctx.fillStyle = 'black'
+        ctx.fillRect 0, 0, 9, 9
+        for x in [0..8]
+          for y in [0..8]
+            c = @cell x, y
+            if c.value is hint.n and (Math.floor(x / 3) is Math.floor(hint.x / 3) or Math.floor(y / 3) is Math.floor(hint.y / 3))
+              ctx.clearRect x, y, 1, 1
+        ctx.clearRect Math.floor(hint.x / 3) * 3, Math.floor(hint.y / 3) * 3, 3, 3
+
+        @fill hint.n
+
+      when 'hidden-single-row'
+        ctx.fillStyle = 'black'
+        ctx.fillRect 0, 0, 9, 9
+        for x in [0..8]
+          for y in [0..8]
+            if y is hint.y then continue
+            c = @cell x, y
+            c2 = @cell x, hint.y
+            if c.value is hint.n and (c2.value is null or Math.floor(y / 3) is Math.floor(hint.y / 3))
+              ctx.clearRect x, y, 1, 1
+        ctx.clearRect 0, hint.y, 9, 1
+
+        @fill hint.n
+
+      when 'hidden-single-col'
+        ctx.fillStyle = 'black'
+        ctx.fillRect 0, 0, 9, 9
+        for x in [0..8]
+          for y in [0..8]
+            if x is hint.x then continue
+            c = @cell x, y
+            c2 = @cell hint.x, y
+            if c.value is hint.n and (c2.value is null or Math.floor(x / 3) is Math.floor(hint.x / 3))
+              ctx.clearRect x, y, 1, 1
+        ctx.clearRect hint.x, 0, 1, 9
+
+        @fill hint.n
+
+      when 'single'
+        ctx.fillStyle = 'black'
+        ctx.fillRect 0, 0, 9, 9
+        for i in [0..8]
+          c = @cell hint.x, i
+          if c.value
+            ctx.clearRect hint.x, i, 1, 1
+          c = @cell i, hint.y
+          if c.value
+            ctx.clearRect i, hint.y, 1, 1
+          cx = (Math.floor(hint.x / 3) * 3) + i % 3
+          cy = (Math.floor(hint.y / 3) * 3) + Math.floor(i / 3)
+          c = @cell cx, cy
+          if c.value
+            ctx.clearRect cx, cy, 1, 1
+        ctx.clearRect hint.x, hint.y, 1, 1
+
+        @fill hint.n
+
+  provideBadHint: ->
     sx = Math.floor(Math.random() * 9)
     sy = Math.floor(Math.random() * 9)
     for x in [0..8]

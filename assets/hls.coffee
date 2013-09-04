@@ -223,6 +223,18 @@ class HLS
       if Array.isArray val
         fn x, y, val
 
+  hint: ->
+
+    retRand = (a) -> a[Math.floor(Math.random() * a.length)]
+
+    test = @hiddenSingels()
+    if test.length then return retRand test
+
+    test = @singles()
+    if test.length then return retRand test
+
+    return null
+
   singles: ->
 
     ret = []
