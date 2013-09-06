@@ -96,23 +96,46 @@ class Sudoku
     test = solver.hint()
 
     if test
-      @visualizeHint test
+      console.log solver.hints
+      if solver.hints[test.y][test.x]
+        console.log solver.hints[test.y][test.x]
+      @visualizeHint test, solver.hints
     else
       throw new Error 'No hint computed'
 
-  visualizeHint: (hint) ->
+  visualizeHint: (hint, subhints) ->
+
+    drawSubhint = (h) ->
+      switch h.type
+        when 'naked-pair-row', 'naked-pair-col', 'naked-pair-zone'
+          for pos in h.pos
+            ctx.clearRect pos[0], pos[1], 1, 1
+            textCtx.scale(0.03125, 0.03125)
+            for n, i in h.ns
+              w = textCtx.measureText(n).width
+              x = (pos[0] + ((i / 3) % 1)) * 32 + (w / 2)
+              y = (pos[1] + (Math.floor(i / 3) / 3)) * 32
+              textCtx.fillText n, x, y
+            textCtx.scale(32, 32)
 
     body = document.querySelector 'body'
     canvas = document.createElement 'canvas'
+    textCanvas = document.createElement 'canvas'
     ctx = canvas.getContext '2d'
+    textCtx = textCanvas.getContext '2d'
 
     bw = @el.clientWidth
     cw = Math.round bw / 9
 
     canvas.width = bw
     canvas.height = bw
-    canvas.className = 'sudoku-hint'
+    canvas.className = 'sudoku-hint sudoku-hint-blur'
     @el.appendChild canvas
+
+    textCanvas.width = bw
+    textCanvas.height = bw
+    textCanvas.className = 'sudoku-hint'
+    @el.appendChild textCanvas
 
     hintText = document.createElement 'div'
     hintText.className = 'sudoku-hint-text'
@@ -126,11 +149,15 @@ class Sudoku
     div.addEventListener evName, =>
       body.removeChild div
       @el.removeChild canvas
+      @el.removeChild textCanvas
       @el.removeChild hintText
     , false
 
     ctx.scale cw, cw
+    textCtx.scale cw, cw
+    textCtx.font = '10px sans-serif'
     ctx.fillStyle = 'black'
+    textCtx.textBaseline = 'top'
     ctx.fillRect 0, 0, 9, 9
 
     @select hint.x, hint.y
@@ -183,6 +210,8 @@ class Sudoku
             ctx.clearRect cx, cy, 1, 1
         ctx.clearRect hint.x, hint.y, 1, 1
         hintText.innerText = 'Only possible value in cell'
+        for sh in subhints[hint.y][hint.x]
+          drawSubhint sh
 
   isValid: ->
 
