@@ -110,6 +110,7 @@ class HLS
   constructor: ->
 
     @board = [0..8].map -> [0..8].map -> [1..9]
+    @hints = [0..8].map -> [0..8].map -> []
     @numEmpty = 81
 
   print: ->
@@ -120,11 +121,12 @@ class HLS
     @board.map (row) -> row.map (cell) -> if Array.isArray cell then null else cell
 
   deflate: ->
-    return JSON.stringify { board: @board, numEmpty: @numEmpty }
+    return JSON.stringify { board: @board, hints: @hints, numEmpty: @numEmpty }
 
   inflate: (str) ->
     data = JSON.parse str
     @board = data.board
+    @hints = data.hints
     @numEmpty = data.numEmpty
 
   @inflate: (str) ->
@@ -227,10 +229,13 @@ class HLS
 
     retRand = (a) -> a[Math.floor(Math.random() * a.length)]
 
-    test = @hiddenSingels()
+    test = [].concat @singles(), @hiddenSingels()
     if test.length then return retRand test
 
-    test = @singles()
+    @lockedCandidates1()
+    @nakedPairs()
+
+    test = [].concat @singles(), @hiddenSingels()
     if test.length then return retRand test
 
     return null
@@ -293,7 +298,7 @@ class HLS
             nns = @board[yy][xx]
             if Array.isArray nns
               if compareArray ns, nns
-                # hint = { type: 'naked-pair-' + t, pos: [[x, y], [xx, yy]], ns: [ns[0], ns[1]] }
+                hint = { type: 'naked-pair-' + t, pos: [[x, y], [xx, yy]], ns: [ns[0], ns[1]] }
                 for j in [0..8]
                   if j isnt p2 and j isnt i
                     [xxx, yyy] = getXY t, p1, j
@@ -301,6 +306,7 @@ class HLS
                     if Array.isArray nnns
                       removeFromArray nnns, ns[0]
                       removeFromArray nnns, ns[1]
+                      @hints[yyy][xxx].push hint
 
     post = ->
 
@@ -331,19 +337,23 @@ class HLS
             if m[1] isnt y
               sameY = false
           if sameX
+            hint = { type: 'locked-candidates-col', pos: matches, ns: (matches.map -> n) }
             ys = matches.map (e) -> e[1]
             for yy in [0..8]
               if yy not in ys
                 ns = @board[yy][x]
                 if Array.isArray ns
                   removeFromArray ns, n
+                  @hints[yy][x].push hint
           if sameY
+            hint = { type: 'locked-candidates-row', pos: matches, ns: (matches.map -> n) }
             xs = matches.map (e) -> e[0]
             for xx in [0..8]
               if xx not in xs
                 ns = @board[y][xx]
                 if Array.isArray ns
                   removeFromArray ns, n
+                  @hints[y][xx].push hint
 
 try
   module.exports = HLS

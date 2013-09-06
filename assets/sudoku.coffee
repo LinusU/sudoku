@@ -96,10 +96,9 @@ class Sudoku
     test = solver.hint()
 
     if test
-      @select test.x, test.y
       @visualizeHint test
     else
-      @provideBadHint()
+      throw new Error 'No hint computed'
 
   visualizeHint: (hint) ->
 
@@ -115,6 +114,10 @@ class Sudoku
     canvas.className = 'sudoku-hint'
     @el.appendChild canvas
 
+    hintText = document.createElement 'div'
+    hintText.className = 'sudoku-hint-text'
+    @el.appendChild hintText
+
     div = document.createElement 'div'
     div.className = 'sudoku-click-trap'
     body.appendChild div
@@ -123,26 +126,27 @@ class Sudoku
     div.addEventListener evName, =>
       body.removeChild div
       @el.removeChild canvas
+      @el.removeChild hintText
     , false
 
     ctx.scale cw, cw
+    ctx.fillStyle = 'black'
+    ctx.fillRect 0, 0, 9, 9
+
+    @select hint.x, hint.y
+    @fill hint.n
 
     switch hint.type
       when 'hidden-single-zone'
-        ctx.fillStyle = 'black'
-        ctx.fillRect 0, 0, 9, 9
         for x in [0..8]
           for y in [0..8]
             c = @cell x, y
             if c.value is hint.n and (Math.floor(x / 3) is Math.floor(hint.x / 3) or Math.floor(y / 3) is Math.floor(hint.y / 3))
               ctx.clearRect x, y, 1, 1
         ctx.clearRect Math.floor(hint.x / 3) * 3, Math.floor(hint.y / 3) * 3, 3, 3
-
-        @fill hint.n
+        hintText.innerText = 'Only possible placement in zone'
 
       when 'hidden-single-row'
-        ctx.fillStyle = 'black'
-        ctx.fillRect 0, 0, 9, 9
         for x in [0..8]
           for y in [0..8]
             if y is hint.y then continue
@@ -151,12 +155,9 @@ class Sudoku
             if c.value is hint.n and (c2.value is null or Math.floor(y / 3) is Math.floor(hint.y / 3))
               ctx.clearRect x, y, 1, 1
         ctx.clearRect 0, hint.y, 9, 1
-
-        @fill hint.n
+        hintText.innerText = 'Only possible placement in row'
 
       when 'hidden-single-col'
-        ctx.fillStyle = 'black'
-        ctx.fillRect 0, 0, 9, 9
         for x in [0..8]
           for y in [0..8]
             if x is hint.x then continue
@@ -165,12 +166,9 @@ class Sudoku
             if c.value is hint.n and (c2.value is null or Math.floor(x / 3) is Math.floor(hint.x / 3))
               ctx.clearRect x, y, 1, 1
         ctx.clearRect hint.x, 0, 1, 9
-
-        @fill hint.n
+        hintText.innerText = 'Only possible placement in column'
 
       when 'single'
-        ctx.fillStyle = 'black'
-        ctx.fillRect 0, 0, 9, 9
         for i in [0..8]
           c = @cell hint.x, i
           if c.value
@@ -184,23 +182,8 @@ class Sudoku
           if c.value
             ctx.clearRect cx, cy, 1, 1
         ctx.clearRect hint.x, hint.y, 1, 1
+        hintText.innerText = 'Only possible value in cell'
 
-        @fill hint.n
-
-  provideBadHint: ->
-    sx = Math.floor(Math.random() * 9)
-    sy = Math.floor(Math.random() * 9)
-    for x in [0..8]
-      for y in [0..8]
-        cx = (sx + x) % 9
-        cy = (sy + y) % 9
-        c = @cell cx, cy
-        if c.value is null
-          n = @data.solution[cy][cx]
-          @select cx, cy
-          @fill n
-          return true
-    return false
   isValid: ->
 
     val = (x, y) => @cell(x, y).value
